@@ -17,6 +17,9 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
+# Copy the .env file
+COPY .env .env
+
 # Build the application
 RUN npm run build
 # If you are using Yarn, uncomment the line below and comment the npm run build line
@@ -31,6 +34,7 @@ WORKDIR /usr/src/app
 # Copy only the necessary files from the builder stage
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/.env .env
 
 # Set environment variables if necessary
 # ENV NODE_ENV=production
